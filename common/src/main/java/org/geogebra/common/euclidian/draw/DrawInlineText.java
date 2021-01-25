@@ -15,7 +15,7 @@ import org.geogebra.common.euclidian.EuclidianView;
 import org.geogebra.common.euclidian.MediaBoundingBox;
 import org.geogebra.common.euclidian.inline.InlineTextController;
 import org.geogebra.common.kernel.geos.GeoElement;
-import org.geogebra.common.kernel.geos.GeoInlineText;
+import org.geogebra.common.kernel.geos.GeoInline;
 
 /**
  * Class that handles drawing inline text elements.
@@ -24,7 +24,7 @@ public class DrawInlineText extends Drawable implements DrawInline {
 
 	public static final int PADDING = 8;
 
-	private final GeoInlineText text;
+	private final GeoInline text;
 	private InlineTextController textController;
 
 	private final TransformableRectangle rectangle;
@@ -35,7 +35,7 @@ public class DrawInlineText extends Drawable implements DrawInline {
 	 * @param view view
 	 * @param text geo element
 	 */
-	public DrawInlineText(EuclidianView view, GeoInlineText text) {
+	public DrawInlineText(EuclidianView view, GeoInline text) {
 		super(view, text);
 		rectangle = new TransformableRectangle(view, text, false);
 		this.text = text;
@@ -65,7 +65,7 @@ public class DrawInlineText extends Drawable implements DrawInline {
 			textController.setHeight((int) (height - 2 * PADDING));
 			textController.setWidth((int) (width - 2 * PADDING));
 			textController.setAngle(angle);
-			if (text.updateFontSize()) {
+			if (textController.updateFontSize()) {
 				textController.updateContent();
 			}
 		}
@@ -174,7 +174,8 @@ public class DrawInlineText extends Drawable implements DrawInline {
 		return getBoundingBox();
 	}
 
-	public InlineTextController getTextController() {
+	@Override
+	public InlineTextController getController() {
 		return textController;
 	}
 
