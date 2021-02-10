@@ -239,4 +239,14 @@ public class HitDetector {
 			}
 		}
 	}
+
+	/**
+	 * add GeoElement to hits
+	 *
+	 * @param geo
+	 *            selected geo
+	 */
+	public void addHitGeo(GeoElement geo) {
+		hits.add(geo);
+	}
 }
