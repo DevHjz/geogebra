@@ -1473,7 +1473,7 @@ public interface GeoElementND extends ExpressionValue, GeoElementConvertable {
 	 * @param sb
 	 *            StringBuilder to add to.
 	 */
-	void addAuralType(Localization loc, ScreenReaderBuilder sb);
+	void addAuralType(ScreenReaderBuilder sb);
 
 	/**
 	 * add geo type and its label for reader.
@@ -1484,7 +1484,7 @@ public interface GeoElementND extends ExpressionValue, GeoElementConvertable {
 	 * @param sb
 	 *            StringBuilder to add to.
 	 */
-	void addAuralLabel(Localization loc, ScreenReaderBuilder sb);
+	void addAuralLabel(ScreenReaderBuilder sb);
 
 	/**
 	 * add Caption for reader if defined, type and label otherwise.
@@ -1495,7 +1495,7 @@ public interface GeoElementND extends ExpressionValue, GeoElementConvertable {
 	 * @param sb
 	 *            StringBuilder to add to.
 	 */
-	void addAuralName(Localization loc, ScreenReaderBuilder sb);
+	void addAuralName(ScreenReaderBuilder sb);
 
 	/**
 	 * Add content aural description if any.

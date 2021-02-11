@@ -1,5 +1,9 @@
 package org.geogebra.common.kernel.geos;
 
+import java.util.Locale;
+
+import org.geogebra.common.main.Localization;
+
 import com.himamis.retex.renderer.share.TeXFormula;
 import com.himamis.retex.renderer.share.serialize.TeXAtomSerializer;
 
@@ -9,6 +13,7 @@ import com.himamis.retex.renderer.share.serialize.TeXAtomSerializer;
  * @author Zbynek
  */
 public class ScreenReaderBuilder {
+	private final Localization loc;
 	private StringBuilder sb = new StringBuilder();
 	private boolean isMobile = false;
 	private TeXAtomSerializer texAtomSerializer;
@@ -16,16 +21,17 @@ public class ScreenReaderBuilder {
 	/**
 	 * Default constructor
 	 */
-	public  ScreenReaderBuilder() {
-
+	public  ScreenReaderBuilder(Localization loc) {
+		this.loc = loc;
 	}
 
 	/**
 	 * Constructor
 	 * @param isMobile whether the user is on a mobile device or desktop
 	 */
-	public  ScreenReaderBuilder(boolean isMobile) {
+	public  ScreenReaderBuilder(Localization loc, boolean isMobile) {
 		this.isMobile = isMobile;
+		this.loc = loc;
 	}
 
 	/**
@@ -89,8 +95,12 @@ public class ScreenReaderBuilder {
 
 	private TeXAtomSerializer getTexAtomSerializer() {
 		if (texAtomSerializer == null) {
-			texAtomSerializer = new TeXAtomSerializer(null);
+			texAtomSerializer = new TeXAtomSerializer(new ScreenReaderSerializationAdapter(loc));
 		}
 		return texAtomSerializer;
+	}
+
+	public void appendMenuDefault(String key, String fallback) {
+		sb.append(loc.getMenuDefault(key, fallback));
 	}
 }

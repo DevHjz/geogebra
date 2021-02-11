@@ -1353,7 +1353,7 @@ public class StringTemplate implements ExpressionNodeConstants {
 
 	}
 
-	private void getPlus(StringBuilder sb, Localization loc) {
+	public void getPlus(StringBuilder sb, Localization loc) {
 		if (stringType == StringType.SCREEN_READER) {
 			sb.append(ScreenReader.getPlus(loc));
 		} else {
@@ -1363,7 +1363,7 @@ public class StringTemplate implements ExpressionNodeConstants {
 		}
 	}
 
-	private void getMinus(StringBuilder sb, Localization loc) {
+	public void getMinus(StringBuilder sb, Localization loc) {
 		if (stringType == StringType.SCREEN_READER) {
 			sb.append(ScreenReader.getMinus(loc));
 		} else {

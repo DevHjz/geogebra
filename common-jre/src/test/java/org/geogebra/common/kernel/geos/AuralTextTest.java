@@ -1,5 +1,6 @@
 package org.geogebra.common.kernel.geos;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import org.geogebra.common.factories.AwtFactoryCommon;
@@ -7,6 +8,7 @@ import org.geogebra.common.jre.headless.LocalizationCommon;
 import org.geogebra.common.kernel.kernelND.GeoElementND;
 import org.geogebra.common.main.AppCommon3D;
 import org.geogebra.common.util.debug.Log;
+import org.geogebra.test.RegexpMatch;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +25,7 @@ public class AuralTextTest {
 
 	private static void aural(String in, String... out) {
 		GeoElementND[] geos = add(in);
-		String aural = geos[0].getAuralText(new ScreenReaderBuilderDot());
+		String aural = geos[0].getAuralText(new ScreenReaderBuilderDot(app.getLocalization()));
 		Log.debug("aural = " + aural);
 		String[] sentences = aural.split("\\.");
 		Assert.assertTrue(aural.endsWith("."));
@@ -83,7 +85,7 @@ public class AuralTextTest {
 
 	@Test
 	public void textAural() {
-		aural("LaTeX(\"a+\\mathbf{x^2}\")", "a+x^(2)", "edit");
+		aural("LaTeX(\"a+\\mathbf{x^2}\")", "a plus x squared", "edit");
 		aural("LaTeX(\"a_{bcd}\")", "a subscript bcd", "edit");
 		aural("LaTeX(\"\\sqrt{x}\")", "sqrt(x)", "edit");
 		aural("LaTeX(\"\\sqrt[3]{x}\")", "nroot(x,3)", "edit");
@@ -125,7 +127,7 @@ public class AuralTextTest {
 	public void readLaTeXCaption() {
 		GeoElementND[] pointA = add("A = (1,2)");
 		pointA[0].setCaption("$ \\sqrt {x}$");
-		auralWhichContainsTheOutput("A", "sqrt(x)");
+		auralWhichContainsTheOutput("A", "square root of x");
 		GeoElementND[] pointB = add("B = (2,2)");
 		pointB[0].setCaption(" $ \\text{this is my nice caption}$");
 		auralWhichContainsTheOutput("B", "this is my nice caption");
@@ -152,8 +154,7 @@ public class AuralTextTest {
 
 	private static void auralWhichContainsTheOutput(String in, String... out) {
 		GeoElementND[] geos = add(in);
-		String aural = geos[0].getAuralText(new ScreenReaderBuilderDot());
-		Log.debug("aural = " + aural);
+		String aural = geos[0].getAuralText(new ScreenReaderBuilderDot(app.getLocalization()));
 		String[] sentences = aural.split("\\.");
 		Assert.assertTrue(aural.endsWith("."));
 		if (out[0].matches(".*\\(.*")) {
@@ -162,8 +163,6 @@ public class AuralTextTest {
 		if (out[0].matches(".*\\).*")) {
 			out[0] = out[0].replace(")", "\\)");
 		}
-		if (!sentences[0].matches(".*" + out[0] + ".*")) {
-			Assert.fail();
-		}
+		assertThat(sentences[0], RegexpMatch.matches(".*" + out[0] + ".*"));
 	}
 }

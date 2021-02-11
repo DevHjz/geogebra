@@ -50,7 +50,8 @@ public class ScreenReader {
 	 *            selected element
 	 */
 	public static void readText(GeoElement geo) {
-		readText(getAuralText(geo, new ScreenReaderBuilder()), geo.getKernel().getApplication());
+		readText(getAuralText(geo, new ScreenReaderBuilder(geo.getKernel().getLocalization())),
+				geo.getKernel().getApplication());
 	}
 
 	private static void readText(String text, App app) {
@@ -332,6 +333,11 @@ public class ScreenReader {
 		StringBuilder sb = new StringBuilder();
 		sb.append(leftStr);
 		sb.append(" ");
+		appendPower(sb, rightStr, loc);
+		return sb.toString();
+	}
+
+	public static void appendPower(StringBuilder sb, String rightStr, Localization loc) {
 		if ("2".equals(rightStr)) {
 			sb.append(ScreenReader.getSquared(loc));
 		} else if ("3".equals(rightStr)) {
@@ -341,7 +347,6 @@ public class ScreenReader {
 			sb.append(rightStr);
 			sb.append(ScreenReader.getEndPower(loc));
 		}
-		return sb.toString();
 	}
 
 	/**
@@ -399,7 +404,7 @@ public class ScreenReader {
 	 */
 	public static void readEVPlay(App app) {
 		Localization loc = app.getLocalization();
-		ScreenReaderBuilder sb = new ScreenReaderBuilder();
+		ScreenReaderBuilder sb = new ScreenReaderBuilder(loc);
 		sb.append(loc.getMenu("PlayButton"));
 		sb.endSentence();
 		if (app.getKernel().getAnimatonManager().isRunning()) {
