@@ -361,6 +361,20 @@ public class CommandsTest {
 	}
 
 	@Test
+	public void intersectConicConic() {
+		tRound("{Intersect(7x y + 3x - 9y = -820, -7x^2 - 7y^2 - 4x + 14y = -1220)}",
+				"{(-10, 10)}");
+		tRound("{Intersect(-7x^2 - 7y^2 - 4x + 14y = -1220, 7x y + 3x - 9y = -820)}",
+				"{(-10, 10)}");
+		tRound("{Intersect(x y + 6x -5y = 158, x y = 128)}",
+				"{(-8.12623, -15.75147), (13.12623, 9.75147)}");
+		tRound("{Intersect( 7y² + 2x + 14y = 3 , -6y² - 20x = 7 )}",
+				"{(-2.11538, -2.42582), (-0.36704, 0.23832)}");
+		tRound("{Intersect( -5x² - 9x + 9y = 0 , 2x² - 12x + 14y = 7 )}",
+			"{(0.75, 1.0625), (-0.95455, -0.44835)}");
+	}
+
+	@Test
 	public void intersectPlanesShouldUpdate() {
 		t("e1:x=z", "x - z = 0");
 		t("e2:y=z", "y - z = 0");

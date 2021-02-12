@@ -1124,20 +1124,6 @@ public class AlgoIntersectConics extends AlgoIntersect implements SymbolicParame
 		// line passing through intersection points is different for some degenerate
 		// cases calculated below:
 
-		double a = c1matrix[0];
-		double b = c1matrix[1];
-		double c = c1matrix[2];
-		double d = c1matrix[3];
-		double e = c1matrix[4];
-		double f = c1matrix[5];
-
-		double k = c2matrix[0];
-		double l = c2matrix[1];
-		double m = c2matrix[2];
-		double n = c2matrix[3];
-		double o = c2matrix[4];
-		double p = c2matrix[5];
-
 		if (isZero(c1matrix[0]) && isZero(c2matrix[0]) && isZero(c1matrix[1]) && isZero(c2matrix[1])) {
 
 			// special case a=b=k=l=0
@@ -1166,28 +1152,8 @@ public class AlgoIntersectConics extends AlgoIntersect implements SymbolicParame
 			// (b p - f l)
 			y1 = 2 * (c1matrix[1] * c2matrix[5] - c1matrix[5] * c2matrix[1]);
 
-			// b m - c l
+		  	// b m - c l
 			k1 = c1matrix[1] * c2matrix[2] - c1matrix[2] * c2matrix[1];
-
-		} else if (isZero(c1matrix[1]) && isZero(c2matrix[1]) && isZero(c1matrix[3]) && isZero(c2matrix[3])) {
-
-			// eg Intersect( -5x² - 9x + 9y = 0 , 2x² - 12x + 14y = 7 )
-
-			// special case b = d = l = n =0
-			// ie no y^2 or xy terms in either
-
-			// line is
-			// (((2 * a) * p) * y) - (((2 * f) * k) * y) = ((((-2) * a) * o) * x) + (((2 *
-			// e) * k) * x) - (a * m) + (c * k)
-
-			// 2 (a o - e k)
-			x1 = 2 * (c1matrix[0] * c2matrix[4] - c1matrix[4] * c2matrix[0]);
-
-			// 2 (a p - f k)
-			y1 = 2 * (c1matrix[0] * c2matrix[5] - c1matrix[5] * c2matrix[0]);
-
-			// a m - c k
-			k1 = c1matrix[0] * c2matrix[2] - c1matrix[2] * c2matrix[0];
 
 		} else {
 
@@ -1199,15 +1165,12 @@ public class AlgoIntersectConics extends AlgoIntersect implements SymbolicParame
 			// y = (x * (((-a) * o) + (e * k)) / ((a * p) - (f * k))) + (((-a) * m) + (c *
 			// k)) / (((2 * a) * p) - ((2 * f) * k))
 
-			// 2 a o - 2 e k
-			x1 = 2 * (c1matrix[0] * c2matrix[4] - c1matrix[4] * c2matrix[0]);
-
-			// 2 a p - 2 f k
-			y1 = 2 * (c1matrix[0] * c2matrix[5] - c1matrix[5] * c2matrix[0]);
-
-			// -a m + c k
-			k1 = c1matrix[0] * c2matrix[2] - c1matrix[2] * c2matrix[0];
-
+			// 2 e k - 2 a o
+			x1 = 2 * (c1matrix[4] * c2matrix[0] - c1matrix[0] * c2matrix[4]);
+			// 2 f k - 2 a p
+			y1 = 2 * (c1matrix[5] * c2matrix[0] - c1matrix[0] * c2matrix[5]);
+			// a m - c k
+			k1 = c1matrix[2] * c2matrix[0] - c1matrix[0] * c2matrix[2];
 		}
 
 		// line is now
