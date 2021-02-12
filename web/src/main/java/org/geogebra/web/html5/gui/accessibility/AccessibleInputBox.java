@@ -3,6 +3,7 @@ package org.geogebra.web.html5.gui.accessibility;
 import java.util.Arrays;
 import java.util.List;
 
+import org.geogebra.common.kernel.geos.GeoElement;
 import org.geogebra.common.kernel.geos.GeoInputBox;
 import org.geogebra.web.html5.gui.inputfield.AutoCompleteTextFieldW;
 import org.geogebra.web.html5.gui.util.FormLabel;
@@ -51,5 +52,11 @@ public class AccessibleInputBox implements AccessibleWidget {
 	@Override
 	public void setFocus(boolean focus) {
 		inputBox.setFocus(focus);
+	}
+
+
+	@Override
+	public boolean isCompatible(GeoElement geo) {
+		return true;
 	}
 }
